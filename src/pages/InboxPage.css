@@ -1,0 +1,62 @@
+.inbox-page {
+  padding: 1rem;
+}
+
+.no-conversations {
+  text-align: center;
+  color: #657786;
+  margin-top: 2rem;
+}
+
+.conversation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.conversation-item {
+  display: flex; /* Make it a flex container */
+  justify-content: space-between; /* Space out sender info and time */
+  align-items: center; /* Vertically align items */
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.conversation-item:hover {
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.sender-info {
+  flex: 1; /* Allow sender info to take available space */
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Allow content to shrink */
+  /* max-width: calc(100% - 60px); Adjust based on message-time width */
+}
+
+.sender-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #1c1e21;
+}
+
+.last-message-preview {
+  color: #657786;
+  font-size: 0.9rem;
+  word-wrap: break-word; /* Allow long words to break */
+  overflow-wrap: break-word; /* Standard property for word wrapping */
+  /* white-space: normal; */ /* Ensure text wraps */
+  /* Remove white-space: nowrap, overflow: hidden, text-overflow: ellipsis */
+}
+
+.message-time {
+  font-size: 0.8rem;
+  color: #aab8c2;
+  margin-left: 0.5rem; /* Space between message preview and time */
+  flex-shrink: 0; /* Prevent time from shrinking */
+}

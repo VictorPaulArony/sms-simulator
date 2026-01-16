@@ -3,3 +3,8 @@
 *.int
 *.lk
 *.zip
+/node_modules
+/dist
+/build
+/.expo
+/.expo-shared

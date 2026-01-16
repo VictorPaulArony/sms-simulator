@@ -1,0 +1,94 @@
+.settings-page {
+  padding: 1rem;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.card form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card input[type="text"],
+.card textarea,
+.card select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.card button {
+  background-color: #1DA1F2;
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 99px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.card button:hover {
+  background-color: #0c85d0;
+}
+
+.card button:disabled {
+  background-color: #aab8c2;
+  cursor: not-allowed;
+}
+
+.sender-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.sender-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #eee;
+}
+
+.sender-item:last-child {
+  border-bottom: none;
+}
+
+.sender-item span {
+  flex-grow: 1;
+  font-size: 1rem;
+  color: #1c1e21;
+}
+
+.delete-button {
+  background-color: #e0245e; /* Red color for delete */
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  border-radius: 99px;
+}
+
+.delete-button:hover {
+  background-color: #c01a4e;
+}

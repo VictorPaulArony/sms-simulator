@@ -1,0 +1,80 @@
+.conversation-page {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 110px); /* Adjust based on header/footer height */
+  padding: 1rem;
+  padding-bottom: 0; /* Remove bottom padding to let input stick */
+}
+
+.messages-container {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 1rem; /* Add padding here instead */
+}
+
+.no-messages {
+  text-align: center;
+  color: #657786;
+  margin-top: 2rem;
+}
+
+.message-bubble {
+  background-color: #dcf8c6; /* Greenish for sent messages */
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  max-width: 80%;
+  align-self: flex-end; /* Align to the right for sent messages */
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.message-bubble p {
+  margin: 0;
+  color: #1c1e21;
+  word-wrap: break-word; /* Ensure long words break */
+  overflow-wrap: break-word; /* Standard property for word wrapping */
+}
+
+.message-timestamp {
+  display: block;
+  font-size: 0.7rem;
+  color: #657786;
+  text-align: right;
+  margin-top: 0.2rem;
+}
+
+.message-input-form {
+  display: flex;
+  padding: 1rem 0;
+  border-top: 1px solid #eee;
+  background-color: #f0f2f5;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+}
+
+.message-input-form input {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 99px;
+  padding: 0.75rem 1rem;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.message-input-form button {
+  background-color: #1DA1F2;
+  color: white;
+  border: none;
+  border-radius: 99px;
+  padding: 0.75rem 1.2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.message-input-form button:hover {
+  background-color: #0c85d0;
+}
