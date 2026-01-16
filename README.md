@@ -1,73 +1,70 @@
-# React + TypeScript + Vite
+# SMS PWA Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a Progressive Web Application (PWA) designed to simulate SMS conversations. It provides a modern, app-like experience directly from the web, with capabilities such as offline access and installability on mobile devices.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+*   Simulates SMS conversation threads.
+*   Progressive Web App (PWA) capabilities for an app-like experience.
+*   Responsive design for various screen sizes.
+*   Configurable settings (e.g., appearance, user preferences).
 
-## React Compiler
+## Prerequisites
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Before you begin, ensure you have the following installed:
 
-## Expanding the ESLint configuration
+*   **Node.js**: [Download & Install Node.js](https://nodejs.org/en/download/) (which includes npm)
+*   **npm** (Node Package Manager) or **Yarn**: (npm is installed with Node.js, Yarn can be installed via `npm install -g yarn`)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Follow these steps to get the project up and running on your local machine.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 1. Clone the Repository
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone https://github.com/VictorPaulArony/sms-simulator.git
+cd sms-simulator
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Install Dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+## Development
+
+To run the application in development mode with hot-reloading:
+
+```bash
+npm run dev
+```
+
+This will start a development server, usually accessible at `http://localhost:5173/` (or similar). The application will automatically reload as you make changes to the source code.
+
+## Build for Production (PWA)
+
+To build the application for production, which includes generating all PWA assets (manifest, service worker, etc.) and optimizing the code:
+
+```bash
+npm run build
+```
+
+This command will create a `dist` folder in the project root, containing all the static files ready for deployment. This folder is optimized for performance and includes the necessary files to function as a PWA.
+
+## Preview Production Build
+
+You can locally preview the production build to ensure everything works as expected before deployment:
+
+```bash
+npm run preview
+```
+
+This will serve the contents of the `dist` folder, allowing you to test the PWA features in a production-like environment.
+
+## PWA Capabilities & Deployment
+
+This application is configured as a Progressive Web App. After building for production, it can be installed on mobile devices and provides features like offline support.
+
+For detailed instructions on how to deploy this PWA to a live web server (e.g., Vercel, Netlify) and how users can install it on their Android and iOS devices, please refer to the `PWA_Deployment_and_Installation.md` file in this repository.
