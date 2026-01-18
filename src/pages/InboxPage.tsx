@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { getSenders, getMessagesBySender, type Sender } from '../services/dataService';
+import { getMessagesBySender, getUnreadMessageCount, getSendersWithLatestMessage, type SenderWithLatestMessage, type Sender } from '../services/dataService';
 import { useNavigate } from 'react-router-dom';
 import './InboxPage.css';
 
 const InboxPage: React.FC = () => {
-  const [senders, setSenders] = useState<Sender[]>([]);
+  const [senders, setSenders] = useState<SenderWithLatestMessage[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setSenders(getSenders());
+    const sortedSenders = getSendersWithLatestMessage().sort((a, b) => b.lastMessageTimestamp - a.lastMessageTimestamp);
+    setSenders(sortedSenders);
   }, []);
 
   const getLastMessageDetails = (senderId: string): { text: string; time: string } => {
@@ -32,18 +33,28 @@ const InboxPage: React.FC = () => {
         <div className="conversation-list">
           {senders.map(sender => {
             const lastMessage = getLastMessageDetails(sender.id);
+            const unreadCount = getUnreadMessageCount(sender.id); 
             return (
               <div key={sender.id} className="conversation-item" onClick={() => navigate(`/conversation/${sender.id}`)}>
+                <div className="user-icon">
+                  <span className="material-symbols-outlined">
+                    account_circle
+                  </span>
+                </div>
                 <div className="sender-info">
                   <div className="sender-name">{sender.name}</div>
                   <div className="last-message-preview">{lastMessage.text}</div>
                 </div>
-                <div className="message-time">{lastMessage.time}</div>
+                <div className="message-details">
+                  <div className="message-time">{lastMessage.time}</div>
+                  {unreadCount > 0 && <div className="unread-count">{unreadCount}</div>}
+                </div>
               </div>
             );
           })}
         </div>
       )}
+      <button className="fab" onClick={() => navigate('/settings')}>+</button>
     </div>
   );
 };
