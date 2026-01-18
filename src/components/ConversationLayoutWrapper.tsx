@@ -20,7 +20,7 @@ const ConversationLayoutWrapper: React.FC = () => {
   }, [senderId]);
 
   return (
-    <Layout title={senderName}>
+    <Layout title={senderName} pageType="conversation" showSettingsLink>
       <ConversationPage />
     </Layout>
   );
