@@ -3,62 +3,111 @@ import * as Types from '../types';
 // Re-export types for easier importing
 export type { Contact as Sender, Message, SenderWithLatestMessage } from '../types';
 
-let contacts: Types.Contact[] = [];
-let messages: Types.Message[] = [];
-let conversations: Types.Conversation[] = [];
+// Storage keys for localStorage
+const STORAGE_KEYS = {
+  CONTACTS: 'sms_simulator_contacts',
+  MESSAGES: 'sms_simulator_messages',
+  CONVERSATIONS: 'sms_simulator_conversations',
+  INITIALIZED: 'sms_simulator_initialized'
+};
 
-// Self contact
-const selfContact: Types.Contact = { id: 'self', name: 'Me', avatar: 'https://i.pravatar.cc/150?img=self' };
-contacts.push(selfContact);
-
-// Other contacts
-const dummyContactNames = ['Alice', 'Bob', 'Charlie', 'David', 'Eve', 'Frank'];
-const dummyContacts: Types.Contact[] = dummyContactNames.map((name, index) => ({
-  id: String(index + 1),
-  name: name,
-  avatar: `https://i.pravatar.cc/150?img=${index + 1}`
-}));
-contacts = contacts.concat(dummyContacts);
-
-// Generate conversations and messages
-let messageIdCounter = 1;
-let conversationIdCounter = 1;
-
-dummyContacts.forEach(contact => {
-  const conversationId = `c${conversationIdCounter++}`;
-  const participantIds = [contact.id, 'self'];
-  let lastMessage: Types.Message | null = null;
-
-  // Generate 5 messages for each conversation
-  for (let i = 0; i < 5; i++) {
-    const sender = (i % 2 === 0) ? contact : selfContact;
-    const receiver = (i % 2 === 0) ? selfContact : contact;
-    const text = (i % 2 === 0)
-      ? `Hey ${receiver.name}, this is ${sender.name}. Message ${i + 1}.`
-      : `Hi ${sender.name}, ${receiver.name} here. Reply to message ${i + 1}.`;
-    const timestamp = new Date(Date.now() - (dummyContacts.length - parseInt(contact.id)) * 3600000 - (5 - i) * 60000).toISOString(); // Staggered timestamps
-
-    const newMessage: Types.Message = {
-      id: `m${messageIdCounter++}`,
-      conversationId,
-      senderId: sender.id,
-      text,
-      timestamp,
-    };
-    messages.push(newMessage);
-    lastMessage = newMessage;
+// Load data from localStorage or initialize with dummy data if not found
+const loadFromStorage = <T>(key: string, defaultValue: T[]): T[] => {
+  try {
+    const storedData = localStorage.getItem(key);
+    return storedData ? JSON.parse(storedData) : defaultValue;
+  } catch (error) {
+    console.error(`Failed to load ${key} from localStorage:`, error);
+    return defaultValue;
   }
+};
 
-  if (lastMessage) {
-    conversations.push({ id: conversationId, participantIds, lastMessage });
-  } else {
-    // Handle case where no messages were generated for a conversation
-    conversations.push({ id: conversationId, participantIds, lastMessage: null });
+// Save data to localStorage
+const saveToStorage = <T>(key: string, data: T[]): void => {
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+  } catch (error) {
+    console.error(`Failed to save ${key} to localStorage:`, error);
   }
-});
+};
 
-// Sort messages by timestamp for proper ordering in UI
-messages.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+// Initialize with dummy data if this is the first time
+const initializeWithDummyData = (): void => {
+  // Self contact
+  const selfContact: Types.Contact = { id: 'self', name: 'Me', avatar: 'https://i.pravatar.cc/150?img=self' };
+
+  // Other contacts
+  const dummyContactNames = ['Alice', 'Bob', 'Charlie', 'David', 'Eve', 'Frank'];
+  const dummyContacts: Types.Contact[] = dummyContactNames.map((name, index) => ({
+    id: String(index + 1),
+    name: name,
+    avatar: `https://i.pravatar.cc/150?img=${index + 1}`
+  }));
+
+  // Generate conversations and messages
+  let messageIdCounter = 1;
+  let conversationIdCounter = 1;
+  const messages: Types.Message[] = [];
+  const conversations: Types.Conversation[] = [];
+
+  dummyContacts.forEach(contact => {
+    const conversationId = `c${conversationIdCounter++}`;
+    const participantIds = [contact.id, 'self'];
+    let lastMessage: Types.Message | null = null;
+
+    // Generate 5 messages for each conversation
+    for (let i = 0; i < 5; i++) {
+      const sender = (i % 2 === 0) ? contact : selfContact;
+      const receiver = (i % 2 === 0) ? selfContact : contact;
+      const text = (i % 2 === 0)
+        ? `Hey ${receiver.name}, this is ${sender.name}. Message ${i + 1}.`
+        : `Hi ${sender.name}, ${receiver.name} here. Reply to message ${i + 1}.`;
+      const timestamp = new Date(Date.now() - (dummyContacts.length - parseInt(contact.id)) * 3600000 - (5 - i) * 60000).toISOString();
+
+      const newMessage: Types.Message = {
+        id: `m${messageIdCounter++}`,
+        conversationId,
+        senderId: sender.id,
+        text,
+        timestamp,
+      };
+      messages.push(newMessage);
+      lastMessage = newMessage;
+    }
+
+    if (lastMessage) {
+      conversations.push({ id: conversationId, participantIds, lastMessage });
+    } else {
+      conversations.push({ id: conversationId, participantIds, lastMessage: null });
+    }
+  });
+
+  // Save dummy data to storage
+  const allContacts = [selfContact, ...dummyContacts];
+  saveToStorage(STORAGE_KEYS.CONTACTS, allContacts);
+  saveToStorage(STORAGE_KEYS.MESSAGES, messages);
+  saveToStorage(STORAGE_KEYS.CONVERSATIONS, conversations);
+  localStorage.setItem(STORAGE_KEYS.INITIALIZED, 'true');
+};
+
+// Load or initialize data
+if (typeof window !== 'undefined') {
+  if (!localStorage.getItem(STORAGE_KEYS.INITIALIZED)) {
+    initializeWithDummyData();
+  }
+}
+
+// Load data from storage
+let contacts: Types.Contact[] = loadFromStorage(STORAGE_KEYS.CONTACTS, []);
+let messages: Types.Message[] = loadFromStorage(STORAGE_KEYS.MESSAGES, []);
+let conversations: Types.Conversation[] = loadFromStorage(STORAGE_KEYS.CONVERSATIONS, []);
+
+// Helper function to save all data
+const saveAllData = (): void => {
+  saveToStorage(STORAGE_KEYS.CONTACTS, contacts);
+  saveToStorage(STORAGE_KEYS.MESSAGES, messages);
+  saveToStorage(STORAGE_KEYS.CONVERSATIONS, conversations);
+};
 
 export const getContacts = (): Types.Contact[] => contacts;
 export const getMessages = (conversationId: string): Types.Message[] => messages.filter(m => m.conversationId === conversationId);
@@ -80,6 +129,7 @@ export const sendMessage = (conversationId: string, senderId: string, text: stri
     conversation.lastMessage = newMessage;
   }
 
+  saveAllData();
   return newMessage;
 };
 
@@ -87,9 +137,10 @@ export const createConversation = (participantIds: string[]): Types.Conversation
   const newConversation: Types.Conversation = {
     id: `c${conversations.length + 1}`,
     participantIds,
-    lastMessage: null, // Will be updated when first message is sent
+    lastMessage: null,
   };
   conversations.push(newConversation);
+  saveAllData();
   return newConversation;
 };
 
@@ -122,14 +173,11 @@ export const getMessagesBySender = (senderId: string): Types.Message[] => {
 };
 
 export const getUnreadMessageCount = (_senderId: string): number => {
-  // For now, return a dummy count as read/unread status is not implemented.
-  // In a real application, this would involve tracking read status per message.
   return 0;
 };
 
 // Functions for SettingsPage
 export const getSenders = (): Types.Sender[] => {
-  // Return all contacts except the 'self' contact
   return contacts.filter(contact => contact.id !== 'self');
 };
 
@@ -140,6 +188,7 @@ export const addSender = (name: string): Types.Sender => {
     avatar: `https://i.pravatar.cc/150?img=${contacts.length}`
   };
   contacts.push(newSender);
+  saveAllData();
   return newSender;
 };
 
@@ -157,6 +206,8 @@ export const deleteSender = (senderId: string): void => {
     const conversation = conversations.find(conv => conv.id === msg.conversationId);
     return conversation !== undefined;
   });
+
+  saveAllData();
 };
 
 export const addMessage = (senderId: string, text: string): Types.Message => {
@@ -181,5 +232,14 @@ export const getSenderById = (senderId: string): Types.Sender | undefined => {
 export const markMessagesAsRead = (_senderId: string): void => {
   // In a real application, this would mark messages as read
   // For this dummy implementation, we don't need to do anything
-  // since we're not tracking read/unread status
+};
+
+export const clearAllData = (): void => {
+  localStorage.removeItem(STORAGE_KEYS.CONTACTS);
+  localStorage.removeItem(STORAGE_KEYS.MESSAGES);
+  localStorage.removeItem(STORAGE_KEYS.CONVERSATIONS);
+  localStorage.removeItem(STORAGE_KEYS.INITIALIZED);
+  contacts = [];
+  messages = [];
+  conversations = [];
 };
