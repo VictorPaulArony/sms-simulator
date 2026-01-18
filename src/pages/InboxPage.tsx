@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getMessagesBySender, getUnreadMessageCount, getSendersWithLatestMessage, type SenderWithLatestMessage, type Sender } from '../services/dataService';
+import { getMessagesBySender, getUnreadMessageCount, getSendersWithLatestMessage, type SenderWithLatestMessage } from '../services/dataService';
 import { useNavigate } from 'react-router-dom';
 import './InboxPage.css';
 

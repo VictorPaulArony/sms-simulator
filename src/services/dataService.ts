@@ -1,5 +1,8 @@
 import * as Types from '../types';
 
+// Re-export types for easier importing
+export type { Contact as Sender, Message, SenderWithLatestMessage } from '../types';
+
 let contacts: Types.Contact[] = [];
 let messages: Types.Message[] = [];
 let conversations: Types.Conversation[] = [];
@@ -118,7 +121,7 @@ export const getMessagesBySender = (senderId: string): Types.Message[] => {
   return [];
 };
 
-export const getUnreadMessageCount = (senderId: string): number => {
+export const getUnreadMessageCount = (_senderId: string): number => {
   // For now, return a dummy count as read/unread status is not implemented.
   // In a real application, this would involve tracking read status per message.
   return 0;
@@ -175,7 +178,7 @@ export const getSenderById = (senderId: string): Types.Sender | undefined => {
   return contacts.find(contact => contact.id === senderId);
 };
 
-export const markMessagesAsRead = (senderId: string): void => {
+export const markMessagesAsRead = (_senderId: string): void => {
   // In a real application, this would mark messages as read
   // For this dummy implementation, we don't need to do anything
   // since we're not tracking read/unread status
