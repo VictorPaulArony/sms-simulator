@@ -8,6 +8,7 @@
 .content {
   flex: 1;
   overflow-y: auto;
+  padding-top: 1.5rem; /* Space for sticky header */
 }
 
 .settings-link {
