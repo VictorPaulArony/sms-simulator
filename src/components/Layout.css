@@ -2,35 +2,16 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #f0f2f5;
+  background-color: #000;
 }
 
 .content {
   flex: 1;
   overflow-y: auto;
-  padding: 1rem;
 }
 
-.bottom-nav {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: #fff;
-  border-top: 1px solid #ddd;
-  padding: 0.5rem 0;
-  position: sticky;
-  bottom: 0;
-}
-
-.bottom-nav a {
-  color: #657786;
+.settings-link {
   text-decoration: none;
-  font-size: 1.2rem;
-  padding: 0.5rem 1rem;
-  border-radius: 99px;
-}
-
-.bottom-nav a.active {
-  color: #1DA1F2;
-  background-color: #e8f5fe;
+  color: #fff;
+  font-size: 1.5rem;
 }
