@@ -1,19 +1,24 @@
 .settings-page {
   padding: 1rem;
+  background-color: #15202b; /* Dark background similar to overall app */
+  color: #fff; /* White text for readability */
+  min-height: calc(100vh - 60px); /* Adjust height for header */
 }
 
 .card {
-  background-color: #fff;
+  background-color: #192734; /* Slightly lighter dark background for cards */
   border-radius: 8px;
   padding: 1.5rem;
   margin-bottom: 1rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Darker shadow */
+  border: 1px solid #1f2c34; /* Border similar to conversation items */
 }
 
 .card h2 {
   margin-top: 0;
   margin-bottom: 1rem;
   font-size: 1.2rem;
+  color: #fff; /* White heading text */
 }
 
 .card form {
@@ -22,19 +27,25 @@
   gap: 0.75rem;
 }
 
+.card label {
+  color: #8899a6; /* Lighter gray for labels */
+}
+
 .card input[type="text"],
 .card textarea,
 .card select {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ddd;
+  border: 1px solid #3a4a58; /* Darker border for inputs */
   border-radius: 4px;
   font-size: 1rem;
   font-family: inherit;
+  background-color: #22303c; /* Dark background for inputs */
+  color: #fff; /* White text in inputs */
 }
 
 .card button {
-  background-color: #1DA1F2;
+  background-color: #f39c12; /* Orange color similar to FAB */
   color: white;
   border: none;
   padding: 0.75rem 1rem;
@@ -46,11 +57,11 @@
 }
 
 .card button:hover {
-  background-color: #0c85d0;
+  background-color: #e08e0b; /* Darker orange on hover */
 }
 
 .card button:disabled {
-  background-color: #aab8c2;
+  background-color: #4a5d6e; /* Disabled color for dark theme */
   cursor: not-allowed;
 }
 
@@ -60,8 +71,9 @@
   margin: 0;
   max-height: 150px;
   overflow-y: auto;
-  border: 1px solid #eee;
+  border: 1px solid #1f2c34; /* Darker border */
   border-radius: 4px;
+  background-color: #22303c; /* Dark background for list */
 }
 
 .sender-item {
@@ -69,7 +81,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #1f2c34; /* Darker separator */
 }
 
 .sender-item:last-child {
@@ -79,7 +91,7 @@
 .sender-item span {
   flex-grow: 1;
   font-size: 1rem;
-  color: #1c1e21;
+  color: #fff; /* White text for sender names */
 }
 
 .delete-button {
@@ -91,4 +103,16 @@
 
 .delete-button:hover {
   background-color: #c01a4e;
+}
+
+.edit-button {
+  background-color: #1DA1F2; /* Blue for edit button, or similar to primary */
+  margin-right: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  border-radius: 99px;
+}
+
+.edit-button:hover {
+  background-color: #0c85d0;
 }
